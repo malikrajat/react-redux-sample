@@ -1,12 +1,40 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware, compose } from "redux";
+import thunk from 'redux-thunk';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import Reducers  from "./reducers";
+import Header from "./components/header";
+import './css/style.css';
+import PostComponent from './components/postList';
+import UsersComponents from './components/usersList';
+import AlbumsComponents from './components/albumsList';
+import TodosComponents from './components/todosList';
+import PostNewComponent from './components/postNew';
+import PostViewComponent from './components/postView';
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(Reducers, composeEnhancers(applyMiddleware(thunk)));
+
+ReactDOM.render(
+    <Provider store={store}>
+        <BrowserRouter>
+            <div>
+                <div className="padding24"> 
+                    <Header/>
+                </div>
+                <Switch>
+                    <Route path="/" exact component={ PostComponent }/>
+                    <Route path="/posts/new" exact component={ PostNewComponent }/>
+                    <Route path="/posts/view/:id" exact component={ PostViewComponent }/>
+                    <Route path="/users" component={ UsersComponents }/>
+                    <Route path="/albums" component={ AlbumsComponents }/>
+                    <Route path="/todos" component={ TodosComponents}/>
+                </Switch>
+            </div>
+        </BrowserRouter>
+    </Provider>,
+    document.querySelector('#root')
+);

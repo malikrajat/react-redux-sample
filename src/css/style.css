@@ -1,0 +1,16 @@
+.list {
+    padding: 26px;
+    border-bottom: 1px solid black !important;   
+}
+.floatLeft {
+    float: left;
+}
+.paddingLeft83 {
+    padding-left: 83%
+}
+.padding24 {
+    padding: 24px;
+}
+.paddingLeft20 {
+    padding-left: 20px;
+}
